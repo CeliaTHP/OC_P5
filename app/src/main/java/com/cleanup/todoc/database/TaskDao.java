@@ -28,12 +28,13 @@ public interface TaskDao {
     void updateTask(Task task);
 
     @Query("DELETE FROM task_table WHERE id = :taskId")
-    int deleteTask(long taskId);
+    void deleteTask(long taskId);
 
-/*
     @Delete
+    void deleteTask(Task task);
+
+    @Query("DELETE FROM task_table")
     void deleteAllTasks();
-    */
 
 
 

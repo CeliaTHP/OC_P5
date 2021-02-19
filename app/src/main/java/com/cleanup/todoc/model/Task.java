@@ -73,7 +73,7 @@ public class Task {
     /**
      * Sets the unique identifier of the task.
      *
-     * @param id the unique idenifier of the task to set
+     * @param id the unique identifier of the task to set
      */
     public void setId(long id) {
         this.id = id;
@@ -103,7 +103,6 @@ public class Task {
      *
      * @return the projectId associated to the task
      */
-    @Nullable
     public long getProjectId() {
         return projectId;
     }
