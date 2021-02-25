@@ -1,4 +1,4 @@
-package com.cleanup.todoc.ui;
+package com.cleanup.todoc.view;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -26,8 +26,10 @@ import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 import com.cleanup.todoc.repositories.ProjectRepository;
 import com.cleanup.todoc.repositories.TaskRepository;
+import com.cleanup.todoc.view_model.MainViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * List of all projects available in the application
      */
-    private final Project[] allProjects = Project.getAllProjects();
+    private final Project[] allProjects = Project.getAllProjects(); //get list from viewmodel
 
     /**
      * List of all current tasks of the application
@@ -100,23 +102,32 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     TaskRepository taskRepository;
     ProjectRepository projectRepository;
 
+    //VIEWMODEL
+    MainViewModel mainViewModel;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
+
+        //NOT WORKING WITH VIEWBINDING
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
 
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setAdapter(adapter);
 
-        taskRepository = new TaskRepository(TaskDatabase.getInstance(this).getTaskDao());
-        projectRepository = new ProjectRepository(TaskDatabase.getInstance(this).getProjectDao());
+        //ActivityMainBinding activityMainBinding = ActivityMainBinding.inflate(LayoutInflater.from(this),null,false);
+
+        TaskRepository taskRepository = new TaskRepository(TaskDatabase.getInstance(this).getTaskDao());
+        ProjectRepository projectRepository = new ProjectRepository(TaskDatabase.getInstance(this).getProjectDao());
 
 
-        taskRepository.getAllTasks().observe(this, new Observer<List<Task>>() {
+        mainViewModel = new MainViewModel(taskRepository, projectRepository);
+
+        mainViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> taskList) {
                 tasks = new ArrayList<>(taskList);
@@ -161,8 +172,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     @Override
     public void onDeleteTask(Task task) {
-        taskRepository.deleteTask(task);
-        updateTasks();
+        mainViewModel.deleteTask(task);
+       // taskRepository.deleteTask(task);
+       // updateTasks();
     }
 
     /**
@@ -234,11 +246,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull final Task task) {
-        //tasks.add(task);
-        //updateTasks();
         //en background later
-        taskRepository.createTask(task);
-        Log.d("ADDTASK ", taskRepository.createTask(task) + "");
+        mainViewModel.createTask(task);
+        Log.d("ADDTASK ", mainViewModel.createTask(task) + "");
     }
 
 

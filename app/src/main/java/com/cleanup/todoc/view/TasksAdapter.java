@@ -1,4 +1,4 @@
-package com.cleanup.todoc.ui;
+package com.cleanup.todoc.view;
 
 import android.content.res.ColorStateList;
 import androidx.annotation.*;

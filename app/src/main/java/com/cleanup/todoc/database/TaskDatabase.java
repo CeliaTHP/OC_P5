@@ -41,16 +41,65 @@ public abstract class TaskDatabase extends RoomDatabase {
 
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
+
                 super.onCreate(db);
 
                 ContentValues contentTask = new ContentValues();
-               // long id, long projectId, @NonNull String name, long creationTimestamp
-                contentTask.put("id", 1);
-                contentTask.put("project_id", 1);
-                contentTask.put("name", "Ranger la salle");
-                contentTask.put("creationTimestamp", "1612875202");
+                ContentValues contentProject = new ContentValues();
 
+
+                //insert project
+                //    /**
+                //     * Returns all the projects of the application.
+                //     *
+                //     * @return all the projects of the application
+                //     */
+                //    @NonNull
+                //    public static Project[] getAllProjects() {
+                //        return new Project[]{
+                //                new Project(1L, "Projet Tartampion", 0xFFEADAD1),
+                //                new Project(2L, "Projet Lucidia", 0xFFB4CDBA),
+                //                new Project(3L, "Projet Circus", 0xFFA3CED2),
+                //        };
+                //    }//
+
+                contentProject.put("id",1L);
+                contentProject.put("name","Projet Tartampion");
+                contentProject.put("color", 0xFFEADAD1);
+                db.insert("project_table",OnConflictStrategy.IGNORE, contentProject);
+
+                contentProject.put("id",2L);
+                contentProject.put("name","Projet Lucidia");
+                contentProject.put("color", 0xFFB4CDBA);
+                db.insert("project_table",OnConflictStrategy.IGNORE, contentProject);
+
+                contentProject.put("id",3L);
+                contentProject.put("name","Projet Circus");
+                contentProject.put("color", 0xFFA3CED2);
+                db.insert("project_table",OnConflictStrategy.IGNORE, contentProject);
+
+                // long id, long projectId, @NonNull String name, long creationTimestamp
+                contentTask.put("id", 1);
+                contentTask.put("project_id", 1L);
+                contentTask.put("name", "Tâche n° 1");
+                contentTask.put("creationTimestamp", "1612875202");
                 db.insert("task_table", OnConflictStrategy.IGNORE, contentTask);
+
+                contentTask.put("id", 2);
+                contentTask.put("project_id", 2L);
+                contentTask.put("name", "Tâche n° 2");
+                contentTask.put("creationTimestamp", "1634562353");
+                db.insert("task_table", OnConflictStrategy.IGNORE, contentTask);
+
+                contentTask.put("id", 3);
+                contentTask.put("project_id", 3L);
+                contentTask.put("name", "Tâche n° 3");
+                contentTask.put("creationTimestamp", "1634562353");
+                db.insert("task_table", OnConflictStrategy.IGNORE, contentTask);
+
+
+                //récuperer projets et les insérer dans la bdd
+
             }
         };
     }

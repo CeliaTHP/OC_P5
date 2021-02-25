@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class TaskDaoTest {
+public class DaoTest {
 
     //ProjectDAO
     private TaskDatabase database;
@@ -52,7 +52,7 @@ public class TaskDaoTest {
 
         this.database.getProjectDao().createProject(PROJECT_DEMO);
 
-        Project project = LiveDataTestUtil.getValue(this.database.getProjectDao().getProject(PROJECT_ID));
+        Project project = this.database.getProjectDao().getProject(PROJECT_ID);
         assertTrue(project.getName().equals(PROJECT_DEMO.getName()) && project.getId() == PROJECT_ID);
     }
 
@@ -106,6 +106,8 @@ public class TaskDaoTest {
         List<Task> tasks = LiveDataTestUtil.getValue(this.database.getTaskDao().getTasksForProject(PROJECT_ID));
         assertTrue(tasks.isEmpty());
     }
+
+    //readItem
 
 
 
