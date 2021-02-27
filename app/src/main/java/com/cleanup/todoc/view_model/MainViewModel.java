@@ -21,6 +21,10 @@ public class MainViewModel extends ViewModel {
         this.projectRepository = projectRepository;
     }
 
+    /**
+     * TASK
+     */
+
     public void deleteTask(Task task) {
         taskRepository.deleteTask(task);
     }
@@ -33,27 +37,18 @@ public class MainViewModel extends ViewModel {
         return taskRepository.getAllTasks();
     }
 
+    /**
+     * PROJECT
+     */
+
     public Project getProject(long id) {
         return projectRepository.getProject(id);
     }
 
-/*
-    /**
-     * Returns the project with the given unique identifier, or null if no project with that
-     * identifier can be found.
-     *
-     * @param id the unique identifier of the project to return
-     * @return the project with the given unique identifier, or null if it has not been found
-
-    @Nullable
-    public Project getProjectById(long id) {
-        for (Project project : Project.getAllProjects()) {
-            if (project.getId() == id)
-                return project;
-        }
-        return null;
+    public LiveData<List<Project>> getAllProjects() {
+        return projectRepository.getAllProjects();
     }
-*/
+
 
 
 }

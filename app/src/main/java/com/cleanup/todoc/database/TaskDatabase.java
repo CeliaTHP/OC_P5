@@ -98,8 +98,6 @@ public abstract class TaskDatabase extends RoomDatabase {
                 db.insert("task_table", OnConflictStrategy.IGNORE, contentTask);
 
 
-                //récuperer projets et les insérer dans la bdd
-
             }
         };
     }

@@ -29,7 +29,6 @@ import com.cleanup.todoc.repositories.TaskRepository;
 import com.cleanup.todoc.view_model.MainViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * List of all projects available in the application
      */
-    private final Project[] allProjects = Project.getAllProjects(); //get list from viewmodel
+    private List<Project> allProjects = new ArrayList<>();
 
     /**
      * List of all current tasks of the application
@@ -124,9 +123,21 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         TaskRepository taskRepository = new TaskRepository(TaskDatabase.getInstance(this).getTaskDao());
         ProjectRepository projectRepository = new ProjectRepository(TaskDatabase.getInstance(this).getProjectDao());
 
-
         mainViewModel = new MainViewModel(taskRepository, projectRepository);
 
+        allProjects = mainViewModel.getAllProjects().getValue();
+
+        initObservers();
+
+        findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddTaskDialog();
+            }
+        });
+    }
+
+    private void initObservers() {
         mainViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> taskList) {
@@ -134,12 +145,10 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 updateTasks();
             }
         });
-
-
-        findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
+        mainViewModel.getAllProjects().observe(this, new Observer<List<Project>>() {
             @Override
-            public void onClick(View view) {
-                showAddTaskDialog();
+            public void onChanged(List<Project> projectList) {
+                allProjects = new ArrayList<>(projectList);
             }
         });
     }
@@ -173,8 +182,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @Override
     public void onDeleteTask(Task task) {
         mainViewModel.deleteTask(task);
-       // taskRepository.deleteTask(task);
-       // updateTasks();
+        // taskRepository.deleteTask(task);
+        // updateTasks();
     }
 
     /**
