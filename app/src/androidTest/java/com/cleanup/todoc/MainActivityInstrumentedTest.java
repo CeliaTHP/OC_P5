@@ -72,7 +72,6 @@ public class MainActivityInstrumentedTest {
     @Test
     public void sortTasks() {
 
-
         //WHEN CREATING A TASK THE LAST ITEM IS ADDED IN THE MIDDLE
         MainActivity activity = rule.getActivity();
 

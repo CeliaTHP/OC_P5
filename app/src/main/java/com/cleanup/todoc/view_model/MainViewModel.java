@@ -33,6 +33,9 @@ public class MainViewModel extends ViewModel {
         return taskRepository.getAllTasks();
     }
 
+    public Project getProject(long id) {
+        return projectRepository.getProject(id);
+    }
 
 /*
     /**

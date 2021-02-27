@@ -11,8 +11,12 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cleanup.todoc.R;
+import com.cleanup.todoc.database.TaskDatabase;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.repositories.ProjectRepository;
+import com.cleanup.todoc.repositories.TaskRepository;
+import com.cleanup.todoc.view_model.MainViewModel;
 
 import java.util.List;
 
@@ -150,7 +154,14 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             lblTaskName.setText(task.getName());
             imgDelete.setTag(task);
 
-            final Project taskProject = task.getProject();
+            /**
+             * Init ViewModel
+             */
+            TaskRepository taskRepository = new TaskRepository(TaskDatabase.getInstance(itemView.getContext()).getTaskDao());
+            ProjectRepository projectRepository = new ProjectRepository(TaskDatabase.getInstance(itemView.getContext()).getProjectDao());
+            MainViewModel mainViewModel = new MainViewModel(taskRepository, projectRepository);
+
+            final Project taskProject = mainViewModel.getProject(task.getProjectId());
             if (taskProject != null) {
                 imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProject.getColor()));
                 lblProjectName.setText(taskProject.getName());

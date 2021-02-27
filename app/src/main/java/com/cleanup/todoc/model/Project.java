@@ -6,7 +6,7 @@ import androidx.annotation.*;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
+
 
 /**
  * <p>Models for project in which tasks are included.</p>
@@ -68,6 +68,7 @@ public class Project {
      * @param id the unique identifier of the project to return
      * @return the project with the given unique identifier, or null if it has not been found
      */
+    /*
     @Nullable
     public static Project getProjectById(long id) {
         for (Project project : getAllProjects()) {
@@ -76,7 +77,7 @@ public class Project {
         }
         return null;
     }
-
+*/
 
     /**
      * Returns the unique identifier of the project.
