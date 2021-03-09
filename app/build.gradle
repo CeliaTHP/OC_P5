@@ -12,15 +12,27 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            //OPTIMIZE CLASS NAME
+            minifyEnabled false
+            //REMOVE UNUSED VALUES
+        }
     }
+
     lintOptions {
         disable 'RestrictedApi'
     }
     buildFeatures {
         viewBinding = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

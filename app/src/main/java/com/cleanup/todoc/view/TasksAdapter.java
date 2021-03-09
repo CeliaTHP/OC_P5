@@ -1,21 +1,21 @@
 package com.cleanup.todoc.view;
 
 import android.content.res.ColorStateList;
-import androidx.annotation.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.database.TaskDatabase;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
-import com.cleanup.todoc.repositories.ProjectRepository;
-import com.cleanup.todoc.repositories.TaskRepository;
 import com.cleanup.todoc.view_model.MainViewModel;
 
 import java.util.List;
@@ -39,13 +39,26 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
     private final DeleteTaskListener deleteTaskListener;
 
     /**
+     * MainViewModel
+     */
+    private final MainViewModel mainViewModel;
+
+    /**
+     * Main Activity
+     */
+    private final AppCompatActivity mainActivity;
+
+
+    /**
      * Instantiates a new TasksAdapter.
      *
      * @param tasks the list of tasks the adapter deals with to set
      */
-    TasksAdapter(@NonNull final List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener) {
+    TasksAdapter(@NonNull final List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener, MainViewModel mainViewModel, AppCompatActivity mainActivity) {
+        this.mainViewModel = mainViewModel;
         this.tasks = tasks;
         this.deleteTaskListener = deleteTaskListener;
+        this.mainActivity = mainActivity;
     }
 
     /**
@@ -121,7 +134,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         /**
          * Instantiates a new TaskViewHolder.
          *
-         * @param itemView the view of the task item
+         * @param itemView           the view of the task item
          * @param deleteTaskListener the listener for when a task needs to be deleted to set
          */
         TaskViewHolder(@NonNull View itemView, @NonNull DeleteTaskListener deleteTaskListener) {
@@ -154,17 +167,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             lblTaskName.setText(task.getName());
             imgDelete.setTag(task);
 
-            /**
-             * Init ViewModel
-             */
-            TaskRepository taskRepository = new TaskRepository(TaskDatabase.getInstance(itemView.getContext()).getTaskDao());
-            ProjectRepository projectRepository = new ProjectRepository(TaskDatabase.getInstance(itemView.getContext()).getProjectDao());
-            MainViewModel mainViewModel = new MainViewModel(taskRepository, projectRepository);
-
-            final Project taskProject = mainViewModel.getProject(task.getProjectId());
+            final LiveData<Project> taskProject = mainViewModel.getProject(task.getProjectId());
             if (taskProject != null) {
-                imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProject.getColor()));
-                lblProjectName.setText(taskProject.getName());
+                mainViewModel.getProject(task.getProjectId()).observe(mainActivity, new Observer<Project>() {
+                    @Override
+                    public void onChanged(Project project) {
+                        imgProject.setSupportImageTintList(ColorStateList.valueOf(project.getColor()));
+                        lblProjectName.setText(project.getName());
+                    }
+                });
+
             } else {
                 imgProject.setVisibility(View.INVISIBLE);
                 lblProjectName.setText("");

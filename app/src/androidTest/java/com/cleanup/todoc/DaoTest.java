@@ -52,8 +52,8 @@ public class DaoTest {
 
         this.database.getProjectDao().createProject(PROJECT_DEMO);
 
-        Project project = this.database.getProjectDao().getProject(PROJECT_ID);
-        assertTrue(project.getName().equals(PROJECT_DEMO.getName()) && project.getId() == PROJECT_ID);
+        LiveData<Project> project = this.database.getProjectDao().getProject(PROJECT_ID);
+        assertTrue(LiveDataTestUtil.getValue(project).getName().equals(PROJECT_DEMO.getName()) && LiveDataTestUtil.getValue(project).getId() == PROJECT_ID);
     }
 
 

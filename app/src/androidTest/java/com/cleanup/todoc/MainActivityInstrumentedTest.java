@@ -72,8 +72,12 @@ public class MainActivityInstrumentedTest {
     @Test
     public void sortTasks() {
 
-        //WHEN CREATING A TASK THE LAST ITEM IS ADDED IN THE MIDDLE
+        //DELETE ALL TASKS BEFORE TEST
         MainActivity activity = rule.getActivity();
+
+        //BEFORE TEST
+        onView(withId(R.id.action_filter)).perform(click());
+        onView(withText(R.string.sort_oldest_first)).perform(click());
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("aaa Tâche example"));

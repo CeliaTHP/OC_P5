@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * <p>Home activity of the application which is displayed when the user opens the app.</p>
@@ -51,11 +53,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @NonNull
     private ArrayList<Task> tasks = new ArrayList<>();
 
-
-    /**
-     * The adapter which handles the list of tasks
-     */
-    private final TasksAdapter adapter = new TasksAdapter(tasks, this);
 
     /**
      * The sort method to be used to display tasks
@@ -104,6 +101,12 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     //VIEWMODEL
     MainViewModel mainViewModel;
 
+    //EXECUTOR
+    Executor executor;
+
+    //Adapter
+    TasksAdapter adapter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,17 +118,16 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
 
-        listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        listTasks.setAdapter(adapter);
-
-        //ActivityMainBinding activityMainBinding = ActivityMainBinding.inflate(LayoutInflater.from(this),null,false);
-
         TaskRepository taskRepository = new TaskRepository(TaskDatabase.getInstance(this).getTaskDao());
         ProjectRepository projectRepository = new ProjectRepository(TaskDatabase.getInstance(this).getProjectDao());
 
-        mainViewModel = new MainViewModel(taskRepository, projectRepository);
+        executor = Executors.newSingleThreadExecutor();
+        mainViewModel = new MainViewModel(taskRepository, projectRepository, executor);
 
-        allProjects = mainViewModel.getAllProjects().getValue();
+        adapter = new TasksAdapter(tasks, this, mainViewModel,this);
+
+        listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        listTasks.setAdapter(adapter);
 
         initObservers();
 
@@ -210,8 +212,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-                // TODO: Replace this by id of persisted task
-                long id = (long) (Math.random() * 50000);
+                long id = 0;
 
                 Task task = new Task(
                         id,
@@ -257,7 +258,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private void addTask(@NonNull final Task task) {
         //en background later
         mainViewModel.createTask(task);
-        Log.d("ADDTASK ", mainViewModel.createTask(task) + "");
     }
 
 

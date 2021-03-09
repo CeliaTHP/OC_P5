@@ -21,7 +21,7 @@ public class ProjectRepository {
     }
 
     // --- GET PROJECT ---
-    public Project getProject(long projectId) {
+    public LiveData<Project> getProject(long projectId) {
         return this.projectDao.getProject(projectId);
     }
 

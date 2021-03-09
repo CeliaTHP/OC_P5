@@ -18,6 +18,9 @@ public interface TaskDao {
     @Query("SELECT * FROM task_table")
     LiveData<List<Task>>getAllTasks();
 
+    @Query("SELECT * FROM task_table WHERE id = :taskId")
+    Task getTask(long taskId);
+
     @Query("SELECT * FROM task_table WHERE project_id = :projectId")
     LiveData<List<Task>>getTasksForProject(long projectId);
 
@@ -35,7 +38,6 @@ public interface TaskDao {
 
     @Query("DELETE FROM task_table")
     void deleteAllTasks();
-
 
 
 }

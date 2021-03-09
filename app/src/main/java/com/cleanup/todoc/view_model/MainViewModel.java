@@ -1,6 +1,5 @@
 package com.cleanup.todoc.view_model;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,15 +9,20 @@ import com.cleanup.todoc.repositories.ProjectRepository;
 import com.cleanup.todoc.repositories.TaskRepository;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 public class MainViewModel extends ViewModel {
 
-    TaskRepository taskRepository;
-    ProjectRepository projectRepository;
+    //USE EXECUTOR FOR API CALLS
+    private final TaskRepository taskRepository;
+    private final ProjectRepository projectRepository;
+    private final Executor executor;
 
-    public MainViewModel(TaskRepository taskRepository, ProjectRepository projectRepository) {
+
+    public MainViewModel(TaskRepository taskRepository, ProjectRepository projectRepository, Executor executor) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
+        this.executor = executor;
     }
 
     /**
@@ -26,11 +30,11 @@ public class MainViewModel extends ViewModel {
      */
 
     public void deleteTask(Task task) {
-        taskRepository.deleteTask(task);
+        executor.execute(() -> taskRepository.deleteTask(task));
     }
 
-    public long createTask(Task task) {
-        return taskRepository.createTask(task);
+    public void createTask(Task task) {
+        executor.execute(() -> taskRepository.createTask(task));
     }
 
     public LiveData<List<Task>> getAllTasks() {
@@ -41,14 +45,13 @@ public class MainViewModel extends ViewModel {
      * PROJECT
      */
 
-    public Project getProject(long id) {
+    public LiveData<Project> getProject(long id) {
         return projectRepository.getProject(id);
     }
 
     public LiveData<List<Project>> getAllProjects() {
         return projectRepository.getAllProjects();
     }
-
 
 
 }
