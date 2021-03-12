@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file(key)
-            storePassword key
-            keyAlias key
-            keyPassword key
+            storeFile file('/Users/celiab/AndroidStudioProjects/OC_P5/signature')
+            storePassword "openclassrooms"
+            keyAlias 'todoc_ks'
+            keyPassword "openclassrooms"
         }
     }
     compileSdkVersion 28
@@ -24,6 +24,8 @@ android {
             minifyEnabled true
             //REMOVE UNUSED VALUES
             shrinkResources true
+            //ADD SIGNING CONFIG FOR RELEASE
+            signingConfig signingConfigs.release
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
