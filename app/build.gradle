@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file(key)
+            storePassword key
+            keyAlias key
+            keyPassword key
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.cleanup.todoc"
@@ -12,24 +20,27 @@ android {
     }
     buildTypes {
         release {
+            //OPTIMIZE CLASS NAMES
             minifyEnabled true
+            //REMOVE UNUSED VALUES
             shrinkResources true
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            //OPTIMIZE CLASS NAME
+            //OPTIMIZE CLASS NAMES
             minifyEnabled false
-            //REMOVE UNUSED VALUES
         }
     }
 
     lintOptions {
         disable 'RestrictedApi'
     }
+
     buildFeatures {
         viewBinding = true
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -39,10 +50,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    // TESTS
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 
     implementation 'com.android.support:design:28.0.0'
 
@@ -51,5 +64,4 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
-    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 }

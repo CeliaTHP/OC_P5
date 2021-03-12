@@ -25,7 +25,7 @@ public interface TaskDao {
     LiveData<List<Task>>getTasksForProject(long projectId);
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
-    long createTask(Task task);
+    void createTask(Task task);
 
     @Update
     void updateTask(Task task);

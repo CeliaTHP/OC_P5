@@ -13,11 +13,14 @@ import java.util.concurrent.Executor;
 
 public class MainViewModel extends ViewModel {
 
-    //USE EXECUTOR FOR API CALLS
+    //Get our methods to interact with task database
     private final TaskRepository taskRepository;
-    private final ProjectRepository projectRepository;
-    private final Executor executor;
 
+    //Get our methods to interact with project database
+    private final ProjectRepository projectRepository;
+
+    //Set an executor to call our methods in asynchronous (not on the main thread)
+    private final Executor executor;
 
     public MainViewModel(TaskRepository taskRepository, ProjectRepository projectRepository, Executor executor) {
         this.taskRepository = taskRepository;

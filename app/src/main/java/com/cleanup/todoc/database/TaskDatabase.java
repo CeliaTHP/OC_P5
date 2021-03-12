@@ -46,20 +46,20 @@ public abstract class TaskDatabase extends RoomDatabase {
                 ContentValues contentTask = new ContentValues();
                 ContentValues contentProject = new ContentValues();
 
-                contentProject.put("id",1L);
-                contentProject.put("name","Projet Tartampion");
+                contentProject.put("id", 1L);
+                contentProject.put("name", "Projet Tartampion");
                 contentProject.put("color", 0xFFEADAD1);
-                db.insert("project_table",OnConflictStrategy.IGNORE, contentProject);
+                db.insert("project_table", OnConflictStrategy.IGNORE, contentProject);
 
-                contentProject.put("id",2L);
-                contentProject.put("name","Projet Lucidia");
+                contentProject.put("id", 2L);
+                contentProject.put("name", "Projet Lucidia");
                 contentProject.put("color", 0xFFB4CDBA);
-                db.insert("project_table",OnConflictStrategy.IGNORE, contentProject);
+                db.insert("project_table", OnConflictStrategy.IGNORE, contentProject);
 
-                contentProject.put("id",3L);
-                contentProject.put("name","Projet Circus");
+                contentProject.put("id", 3L);
+                contentProject.put("name", "Projet Circus");
                 contentProject.put("color", 0xFFA3CED2);
-                db.insert("project_table",OnConflictStrategy.IGNORE, contentProject);
+                db.insert("project_table", OnConflictStrategy.IGNORE, contentProject);
 
                 contentTask.put("id", 1);
                 contentTask.put("project_id", 1L);
@@ -78,7 +78,6 @@ public abstract class TaskDatabase extends RoomDatabase {
                 contentTask.put("name", "Tâche n° 3");
                 contentTask.put("creationTimestamp", 1615297261000L);
                 db.insert("task_table", OnConflictStrategy.IGNORE, contentTask);
-
 
             }
         };

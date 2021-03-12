@@ -2,7 +2,6 @@ package com.cleanup.todoc.view;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -124,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         executor = Executors.newSingleThreadExecutor();
         mainViewModel = new MainViewModel(taskRepository, projectRepository, executor);
 
-        adapter = new TasksAdapter(tasks, this, mainViewModel,this);
+        adapter = new TasksAdapter(tasks, this, mainViewModel, this);
 
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setAdapter(adapter);
@@ -212,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
+                // We set 0 as id so it's incremented automatically when the task is inserted in our table
                 long id = 0;
 
                 Task task = new Task(

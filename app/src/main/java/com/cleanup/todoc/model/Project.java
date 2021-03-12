@@ -1,11 +1,10 @@
 package com.cleanup.todoc.model;
 
 
-
-import androidx.annotation.*;
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 
 
 /**
@@ -19,8 +18,8 @@ public class Project {
     /**
      * The unique identifier of the project
      */
-    @PrimaryKey(autoGenerate =  true)
-    private long id;
+    @PrimaryKey(autoGenerate = true)
+    private final long id;
 
     /**
      * The name of the project
