@@ -82,8 +82,8 @@ public class DaoTest {
     }
 
     @Test
-    public void insertAndUpdateItem() throws InterruptedException {
-        // BEFORE : Adding demo project & demo tasks. Next, update task added & re-save it
+    public void insertAndUpdateProject() throws InterruptedException {
+        // BEFORE : Adding demo project & demo task. Next, update task added & re-save it
         this.database.getProjectDao().createProject(PROJECT_DEMO);
         this.database.getTaskDao().createTask(TASK_1);
         Task taskAdded = LiveDataTestUtil.getValue(this.database.getTaskDao().getTasksForProject(PROJECT_ID)).get(0);
@@ -95,8 +95,8 @@ public class DaoTest {
     }
 
     @Test
-    public void insertAndDeleteItem() throws InterruptedException {
-        // BEFORE : Adding demo user & demo item. Next, get the item added & delete it.
+    public void insertAndDeleteProject() throws InterruptedException {
+        // BEFORE : Adding demo project & demo task . Next, get the task added & delete it.
         this.database.getProjectDao().createProject(PROJECT_DEMO);
         this.database.getTaskDao().createTask(TASK_1);
         Task taskAdded = LiveDataTestUtil.getValue(this.database.getTaskDao().getTasksForProject(PROJECT_ID)).get(0);
