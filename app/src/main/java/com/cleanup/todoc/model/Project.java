@@ -46,7 +46,6 @@ public class Project {
         this.color = color;
     }
 
-
     /**
      * Returns the unique identifier of the project.
      *
