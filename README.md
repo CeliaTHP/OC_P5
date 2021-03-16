@@ -11,9 +11,9 @@ Il est également possible de filtrer la liste des tâches dans l’ordre alphab
 <li>Créer ou supprimer une tâche</li>
 <li>Trier les tâches par ordre alphabétique ou par ancienneté.</li>
 </ul>
-<h2>Modèle relationnel</h2>
-<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/MPD.png" alt="app" style="max-width:100%;">
-<h2>Diagramme de classes</h2>
-<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/DDC.png" alt="app" style="max-width:100%;">
-<h2>Diagramme d'utilisation</h2>
-<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/DU.png" alt="app" style="max-width:100%;">
+<h1>Modèle relationnel</h1>
+<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/MPD.png" alt="mpd" style="max-width:100%;">
+<h1>Diagramme de classes</h1>
+<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/DDC.png" alt="ddc" style="max-width:100%;">
+<h1>Diagramme d'utilisation</h1>
+<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/DU.png" alt="du" style="max-width:100%;">
