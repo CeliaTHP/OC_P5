@@ -4,7 +4,7 @@
 Il est également possible de filtrer la liste des tâches dans l’ordre alphabétique croissant, décroissant, ou encore par date de création croissante ou décroissante.
 </p>
 <br>
-<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/app.png" alt="app" style="max-width:100%;">
+<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/doc_github/app.png" alt="app" style="max-width:100%;">
 <h2>Fonctionnalités : </h2>
 <ul>
 <li>Afficher la liste des tâches créées</li>
@@ -12,8 +12,8 @@ Il est également possible de filtrer la liste des tâches dans l’ordre alphab
 <li>Trier les tâches par ordre alphabétique ou par ancienneté.</li>
 </ul>
 <h1>Modèle relationnel</h1>
-<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/MPD.png" alt="mpd" style="max-width:100%;">
+<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/doc_github/MPD.png" alt="mpd" style="max-width:100%;">
 <h1>Diagramme de classes</h1>
-<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/DDC.png" alt="ddc" style="max-width:100%;">
+<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/doc_github/DDC.png" alt="ddc" style="max-width:100%;">
 <h1>Diagramme d'utilisation</h1>
-<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/DU.png" alt="du" style="max-width:100%;">
+<img src= "https://github.com/CeliaTHP/OC_P5/blob/default/doc_github/DU.png" alt="du" style="max-width:100%;">
