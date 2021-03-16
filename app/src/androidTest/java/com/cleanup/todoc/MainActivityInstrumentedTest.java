@@ -23,6 +23,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.cleanup.todoc.TestUtils.withRecyclerView;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -40,32 +41,43 @@ public class MainActivityInstrumentedTest {
     @Test
     public void addAndRemoveTask() {
 
-        //DELETE ALL TASKS FOR THIS ONE
         MainActivity activity = rule.getActivity();
         TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
 
-        // Check that lblTask is displayed
-        assertThat(lblNoTask.getVisibility(), equalTo(View.VISIBLE));
+        int baseCount = listTasks.getAdapter().getItemCount();
 
         // Create a new task
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("Tâche example"));
         onView(withId(android.R.id.button1)).perform(click());
 
-        // Check that lblTask is not displayed anymore
-        assertThat(lblNoTask.getVisibility(), equalTo(View.GONE));
-        // Check that recyclerView is displayed
-        assertThat(listTasks.getVisibility(), equalTo(View.VISIBLE));
         // Check that it contains one more element
-        assertThat(listTasks.getAdapter().getItemCount(), equalTo( 1));
+        assertEquals(listTasks.getAdapter().getItemCount(), baseCount + 1);
+        // Update our count
+        baseCount = listTasks.getAdapter().getItemCount();
 
-        onView(withId(R.id.img_delete)).perform(click());
+        // Check that lblTask is not displayed anymore if our list contains at least one item
+        if(baseCount > 0) {
+            assertThat(lblNoTask.getVisibility(), equalTo(View.GONE));
+            // Check that recyclerView is displayed
+            assertThat(listTasks.getVisibility(), equalTo(View.VISIBLE));
+        }
 
-        // Check that lblTask is displayed
-        assertThat(lblNoTask.getVisibility(), equalTo(View.VISIBLE));
-        // Check that recyclerView is not displayed anymore
-        assertThat(listTasks.getVisibility(), equalTo(View.GONE));
+        // Delete our task
+        onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete)).perform(click());
+
+        // Check that it contains one less element
+        assertEquals(listTasks.getAdapter().getItemCount(), baseCount - 1);
+        // Update our count
+        baseCount = listTasks.getAdapter().getItemCount();
+
+        // Check that lblTask is displayed if our list is empty
+        if(baseCount <= 0) {
+            assertThat(lblNoTask.getVisibility(), equalTo(View.VISIBLE));
+            // Check that recyclerView is not displayed anymore
+            assertThat(listTasks.getVisibility(), equalTo(View.GONE));
+        }
 
     }
 

@@ -100,9 +100,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     //VIEWMODEL
     MainViewModel mainViewModel;
 
-    //EXECUTOR
-    Executor executor;
-
     //Adapter
     TasksAdapter adapter;
 
@@ -120,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         TaskRepository taskRepository = new TaskRepository(TaskDatabase.getInstance(this).getTaskDao());
         ProjectRepository projectRepository = new ProjectRepository(TaskDatabase.getInstance(this).getProjectDao());
 
-        executor = Executors.newSingleThreadExecutor();
+        Executor executor = Executors.newSingleThreadExecutor();
         mainViewModel = new MainViewModel(taskRepository, projectRepository, executor);
 
         adapter = new TasksAdapter(tasks, this, mainViewModel, this);
@@ -183,8 +180,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @Override
     public void onDeleteTask(Task task) {
         mainViewModel.deleteTask(task);
-        // taskRepository.deleteTask(task);
-        // updateTasks();
     }
 
     /**
@@ -286,8 +281,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                     break;
 
             }
-            adapter.updateTasks(tasks);
         }
+        adapter.updateTasks(tasks);
     }
 
     /**
